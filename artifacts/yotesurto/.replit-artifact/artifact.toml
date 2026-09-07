@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "YoTeSurto"
+description = "Tienda online de productos para manicure, pedicure y cuidado personal, con catálogo de productos, categorías y carrito de compras."
+version = "1.0.0"
+id = "artifacts/yotesurto"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 24925
+
+[services.development]
+run = "pnpm --filter @workspace/yotesurto run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/yotesurto", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/yotesurto/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "24925"
+BASE_PATH = "/"
